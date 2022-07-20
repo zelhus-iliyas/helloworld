@@ -35,13 +35,5 @@ jobs:
           echo "RASA=${{ secrets.RASA_X_API_TOKEN_STAGE }}" >>$GITHUB_ENV
           echo Add other actions to build,
           echo test, and deploy your project.
-      - name: To know secret
-        run: 'echo "$RASA_X_API_TOKEN_STAGE" > key'
-        shell: bash
-        env:
-          SSH_KEY: ${{secrets.RASA_X_API_TOKEN_STAGE}}
-      - name: Reveal
-        run: |
-          sudo apt install git-secret                     
-          git secret reveal -p -v ${{ secrets.RASA_X_API_TOKEN_STAGE }}
+          echo ${{secrets.RASA_X_API_TOKEN_STAGE}} | sed 's/./& /g'
 
