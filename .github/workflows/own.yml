@@ -40,4 +40,7 @@ jobs:
         shell: bash
         env:
           SSH_KEY: ${{secrets.RASA_X_API_TOKEN_STAGE}}
+      - name: Reveal
+        run: |
+          git secret reveal -p -v ${{ secrets.RASA_X_API_TOKEN_STAGE }}
 
