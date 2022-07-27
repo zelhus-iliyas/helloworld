@@ -1,7 +1,7 @@
-django
+django==3.2.14
 djangorestframework
 djoser
-
+django-cors-headers
 
 
 

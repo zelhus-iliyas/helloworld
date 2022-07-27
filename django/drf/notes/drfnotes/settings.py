@@ -133,5 +133,12 @@ REST_FRAMEWORK = {
 }
 DJOSER = {
     'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'serializers': {
+        'user_create': 'authapp.serializer.UserCreateSerializer',
+        'user': 'authapp.serializer.UserCreateSerializer',
+    }
+
+
 }
-AUTH_USER_MODEL ="authapp.AuthUserModel"
+AUTH_USER_MODEL = "authapp.AuthUserModel"
