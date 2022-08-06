@@ -1,4 +1,0 @@
-django
-gunicorn
-django-cors-headers
-uwsgi
