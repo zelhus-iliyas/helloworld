@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import NoteSerializer
 from .models import Notes
 
-# from django.views import View
-# from django.http import JsonResponse
+from django.views import View
+from django.http import JsonResponse
 
 
 class NotesDetailView(mixins.RetrieveModelMixin, generics.GenericAPIView):
@@ -45,10 +45,10 @@ class NotesUpdateView(mixins.UpdateModelMixin, generics.GenericAPIView):
         return self.update(request, *args, **kwargs)
 
 
-# class RedirectSocial(View):
+class RedirectSocial(View):
 
-#     def get(self, request, *args, **kwargs):
-#         code, state = str(request.GET['code']), str(request.GET['state'])
-#         json_obj = {'code': code, 'state': state}
-#         print(json_obj)
-#         return JsonResponse(json_obj)
+    def get(self, request, *args, **kwargs):
+        code, state = str(request.GET['code']), str(request.GET['state'])
+        json_obj = {'code': code, 'state': state}
+        print(json_obj)
+        return JsonResponse(json_obj)

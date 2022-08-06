@@ -33,11 +33,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-
+    'corsheaders',
+    'social_django',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,6 +64,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -131,14 +138,39 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
+
+
+# URL you add to google developers console as allowed to make redirection
+white_list = ['http://localhost:8000/notes/profile/']
+
+
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'serializers': {
         'user_create': 'authapp.serializer.UserCreateSerializer',
         'user': 'authapp.serializer.UserCreateSerializer',
-    }
+    },
+    # Redirected URL we listen on google console
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': white_list
+
 
 
 }
 AUTH_USER_MODEL = "authapp.AuthUserModel"
+
+
+AUTHENTICATION_BACKENDS = (
+    # We are going to implement Google, choose the one you need from docs
+    'social_core.backends.google.GoogleOAuth2',
+
+    # Crucial when logging into admin with username & password
+    'django.contrib.auth.backends.ModelBackend',
+)
+# Client ID and Client Secret obtained from console.developers.google.com
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '772315920728-bgm3mgrkhre9dg2kt1vapap63cl3o3nn.apps.googleusercontent.com'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True # Optional, how token will be saved in DB
